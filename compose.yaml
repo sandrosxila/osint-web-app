@@ -1,0 +1,19 @@
+services:
+  db:
+    image: mysql
+    network_mode: host
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: osint_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+  backend:
+    network_mode: host
+    build:
+      context: osintapp
+      dockerfile: ./Dockerfile
+    ports:
+      - "8080:8080"
