@@ -1,13 +1,12 @@
 package com.osint.osintapp.service
 
 import com.osint.osintapp.model.ScanResult
+import com.osint.osintapp.model.ScannedOutput
 import com.osint.osintapp.repository.ScanResultRepository
 import org.springframework.stereotype.Service
 import java.io.File
-import java.nio.file.Paths
 import java.time.LocalDateTime
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
 import org.springframework.beans.factory.annotation.Autowired
 
 
@@ -47,8 +46,6 @@ class OsintService {
 
             val jsonString = readFile("./theHarvester/output/result.json")
 
-            println(Paths.get("").toAbsolutePath().toString() )
-
             output.append(jsonString)
 
             // Check exit code
@@ -87,7 +84,7 @@ class OsintService {
     fun getOutput(output: String): Any {
         return try {
             println("Attempting to parse JSON output: $output") // Log the raw output
-            Json.decodeFromString<JsonObject>(output) // Try to deserialize the output to OutputData
+            Json.decodeFromString(ScannedOutput.serializer(), output) // Try to deserialize the output to OutputData
         } catch (e: Exception) {
             println("Error decoding JSON: ${e.message}") // Log the error message
             output // Return the raw output as fallback
@@ -103,5 +100,16 @@ class OsintService {
                 "output" to getOutput(scan.output),
             )
         }
+    }
+
+    fun getScan(id: Long): Map<String, Any> {
+        val scan = scanResultRepository.findById(id).orElseThrow();
+
+        return mapOf(
+            "domain" to scan.domain,
+            "startTime" to scan.startTime.toString(),
+            "endTime" to scan.endTime.toString(),
+            "output" to getOutput(scan.output),
+        )
     }
 }
