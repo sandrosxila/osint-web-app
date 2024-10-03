@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ScannedResult } from "@/models/scan";
 import { Button } from "./ui/button";
 import { ScanModal } from "./scan-modal";

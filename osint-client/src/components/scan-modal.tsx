@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./scan-card.module.scss";
 import { Modal } from "./ui/modal";
 import { ScannedResult } from "@/models/scan";

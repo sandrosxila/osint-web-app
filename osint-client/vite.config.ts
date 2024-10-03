@@ -7,9 +7,12 @@ export default defineConfig({
   plugins: [react(), svgr()],
   server: {
     port: 3000,
+    strictPort: true,
+    host: true,
+    origin: "http://0.0.0.0:3000",
     proxy: {
       "/osint": {
-        target: "http://localhost:8080",
+        target: "http://backend:8080",
         changeOrigin: true,
         secure: false,
       },

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { DomainForm } from "@/components/domain-form";
 import { ScanCard } from "@/components/scan-card";
 import { useState } from "react";
