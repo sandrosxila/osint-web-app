@@ -31,7 +31,7 @@ export const ScanCard = ({ scan }: ScanCardProps) => {
           <dd>{scan.endTime}</dd>
 
           <dt>Scan Results: </dt>
-          <dd>
+          <dd className={styles.scanResultsData}>
             <ResultDataList name="E-mails" data={scan.output.emails} />
             <ResultDataList name="Hosts" data={scan.output.hosts} />
             <ResultDataList name="Shodan" data={scan.output.shodan} />
@@ -49,9 +49,9 @@ type ResultDataProps = {
 
 const ResultDataList = ({ name, data = [] }: ResultDataProps) => {
   return (
-    <dl>
+    <>
       {data.length > 0 && (
-        <>
+        <dl>
           <dt>{name}: </dt>
           <dd>
             <ul>
@@ -60,8 +60,8 @@ const ResultDataList = ({ name, data = [] }: ResultDataProps) => {
               ))}
             </ul>
           </dd>
-        </>
+        </dl>
       )}
-    </dl>
+    </>
   );
 };

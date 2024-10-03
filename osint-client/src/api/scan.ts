@@ -1,7 +1,7 @@
 import { ScannedResult } from "@/models/scan";
 
-export const getAllScannedResults = async () => {
-  const response = await fetch("osint/scans", {
+export const getAllScannedResults = async (limit?: number) => {
+  const response = await fetch(`osint/scans?${limit != undefined ? 'limit=' + limit : ''}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -9,7 +9,7 @@ export const getAllScannedResults = async () => {
   });
 
   if(!response.ok) {
-    return [] as ScannedResult[]
+    throw Error(response.statusText);
   }
 
   return (await response.json()) as ScannedResult[];
@@ -24,7 +24,7 @@ export const getScannedResult = async (id: number) => {
   });
 
   if(!response.ok) {
-    return null;
+    throw Error(response.statusText);
   }
 
   return (await response.json()) as ScannedResult;
@@ -40,7 +40,7 @@ export const initiateScan = async (domain: string) => {
   });
 
   if(!response.ok) {
-    return null;
+    throw Error(response.statusText);
   }
 
   return (await response.json()) as ScannedResult;
