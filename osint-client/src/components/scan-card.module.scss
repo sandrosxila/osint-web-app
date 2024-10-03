@@ -6,6 +6,8 @@
   border: 1px solid white;
   padding: 24px;
   align-items: center;
+  box-shadow: 0 0 5px 2px #0000081d;
+  background-color: #1d1d1d;
 }
 
 .domainName {
@@ -51,4 +53,19 @@
 
 .scanResultsData {
   overflow: auto;
+}
+
+.button {
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.dl {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.dd {
+  margin-bottom: 12px;
 }

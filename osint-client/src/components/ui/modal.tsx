@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import styles from "./modal.module.scss";
+import { CloseButton } from "./close-button";
 
 type ModalProps = React.PropsWithChildren<{
   isOpen?: boolean;
@@ -15,9 +16,7 @@ export const Modal = ({ isOpen, onClose, children }: ModalProps) => {
   return ReactDOM.createPortal(
     <div className={styles.wrapper}>
       <div className={styles.body}>
-        <button className={styles.closeButton} onClick={onClose}>
-          X
-        </button>
+        <CloseButton className={styles.closeButton} size={20} color="white" onClick={onClose}/>
         {children}
       </div>
     </div>,
