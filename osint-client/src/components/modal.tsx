@@ -1,11 +1,25 @@
 import React from "react";
-import ReactDOM from "react-dom"
+import ReactDOM from "react-dom";
 import styles from "./modal.module.scss";
 
-export const Modal = ({children}: React.PropsWithChildren) => {
+type ModalProps = React.PropsWithChildren<{
+  isOpen?: boolean;
+  onClose?: () => void;
+}>;
+
+export const Modal = ({ isOpen, onClose, children }: ModalProps) => {
+  if (!isOpen) {
+    return <></>;
+  }
+
   return ReactDOM.createPortal(
     <div className={styles.wrapper}>
-      {children}
+      <div className={styles.body}>
+        <button className={styles.closeButton} onClick={onClose}>
+          X
+        </button>
+        {children}
+      </div>
     </div>,
     document.querySelector("#modal-root")!
   );

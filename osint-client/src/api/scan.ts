@@ -1,4 +1,4 @@
-import { ScannedDomain } from "@/models/scan";
+import { ScannedResult } from "@/models/scan";
 
 export const getAllScannedResults = async () => {
   const response = await fetch("osint/scans", {
@@ -8,7 +8,11 @@ export const getAllScannedResults = async () => {
     },
   });
 
-  return (await response.json()) as ScannedDomain[];
+  if(!response.ok) {
+    return [] as ScannedResult[]
+  }
+
+  return (await response.json()) as ScannedResult[];
 };
 
 export const getScannedResult = async (id: number) => {
@@ -19,7 +23,11 @@ export const getScannedResult = async (id: number) => {
     },
   });
 
-  return (await response.json()) as ScannedDomain;
+  if(!response.ok) {
+    return null;
+  }
+
+  return (await response.json()) as ScannedResult;
 };
 
 export const initiateScan = async (domain: string) => {
@@ -31,5 +39,9 @@ export const initiateScan = async (domain: string) => {
     body: JSON.stringify({ domain }),
   });
 
-  return (await response.json()) as ScannedDomain;
+  if(!response.ok) {
+    return null;
+  }
+
+  return (await response.json()) as ScannedResult;
 };

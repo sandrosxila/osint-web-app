@@ -2,23 +2,27 @@ import React, { useEffect } from "react";
 import { DomainForm } from "@/components/domain-form";
 import { ScanCard } from "@/components/scan-card";
 import { useState } from "react";
-import { ScannedDomain } from "../models/scan";
+import { ScannedResult } from "../models/scan";
 import { getAllScannedResults, initiateScan } from "../api/scan";
 import styles from "./home-page.module.scss";
+import { transformScanResultDates } from "../utils/scanResult";
 
 export const HomePage = () => {
-  const [scans, setScans] = useState<ScannedDomain[]>([]);
+  const [scans, setScans] = useState<ScannedResult[]>([]);
 
   const onScan = async (domain: string) => {
     const scanResult = await initiateScan(domain);
-    setScans((prev) => [...prev, scanResult]);
+
+    if (scanResult) {
+      setScans((prev) => [...prev, transformScanResultDates(scanResult)]);
+    }
   };
 
   useEffect(() => {
     getAllScannedResults().then((results) => {
-      setScans(results);
-    })
-  }, [])
+      setScans(results.map(transformScanResultDates));
+    });
+  }, []);
 
   return (
     <div className={styles.wrapper}>

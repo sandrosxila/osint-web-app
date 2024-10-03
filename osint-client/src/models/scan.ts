@@ -1,4 +1,4 @@
-export type ScannedDomain = {
+export type ScannedResult = {
   id: number;
   domain: string;
   startTime: string;
