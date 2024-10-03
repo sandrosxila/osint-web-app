@@ -61,7 +61,7 @@ class OsintService {
         val endTime = LocalDateTime.now()
 
         // Return a ScanResult object
-        val res = ScanResult(domain=domain, startTime = startTime, endTime = endTime, output = output.toString())
+        val res = ScanResult(domain = domain, startTime = startTime, endTime = endTime, output = output.toString())
 
         scanResultRepository.save(res)
 
@@ -83,7 +83,6 @@ class OsintService {
 
     fun getOutput(output: String): Any {
         return try {
-            println("Attempting to parse JSON output: $output") // Log the raw output
             Json.decodeFromString(ScannedOutput.serializer(), output) // Try to deserialize the output to OutputData
         } catch (e: Exception) {
             println("Error decoding JSON: ${e.message}") // Log the error message
@@ -91,15 +90,28 @@ class OsintService {
         }
     }
 
-    fun getScans(): List<Map<String, Any>> {
-        return scanResultRepository.findAll().map { scan ->
-            mapOf(
-                "domain" to scan.domain,
-                "startTime" to scan.startTime.toString(),
-                "endTime" to scan.endTime.toString(),
-                "output" to getOutput(scan.output),
-            )
+    fun getScans(limit: Int? = null): List<Map<String, Any>> {
+        if (limit != null) {
+            return scanResultRepository.findAllByOrderByStartTimeDescWithLimit(limit)
+                .map { scan ->
+                    mapOf(
+                        "domain" to scan.domain,
+                        "startTime" to scan.startTime.toString(),
+                        "endTime" to scan.endTime.toString(),
+                        "output" to getOutput(scan.output),
+                    )
+                }
         }
+
+        return scanResultRepository.findAllByOrderByStartTimeDesc()
+            .map { scan ->
+                mapOf(
+                    "domain" to scan.domain,
+                    "startTime" to scan.startTime.toString(),
+                    "endTime" to scan.endTime.toString(),
+                    "output" to getOutput(scan.output),
+                )
+            }
     }
 
     fun getScan(id: Long): Map<String, Any> {

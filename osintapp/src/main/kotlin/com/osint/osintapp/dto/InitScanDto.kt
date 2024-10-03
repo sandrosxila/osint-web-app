@@ -1,5 +1,5 @@
 package com.osint.osintapp.dto
 
-data class InitScan (
+data class InitScanDto (
     val domain: String
 )

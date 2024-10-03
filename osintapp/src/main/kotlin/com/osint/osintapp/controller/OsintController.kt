@@ -1,8 +1,7 @@
 package com.osint.osintapp.controller
 
-import com.osint.osintapp.dto.InitScan
+import com.osint.osintapp.dto.InitScanDto
 import com.osint.osintapp.service.OsintService
-import com.osint.osintapp.model.ScanResult
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -12,13 +11,13 @@ import org.springframework.web.bind.annotation.*
 class OsintController(private val osintService: OsintService) {
 
     @PostMapping("/scan")
-    fun initiateScan(@RequestBody initScan: InitScan): Map<String, Any> {
-        return osintService.initiateScan(initScan.domain)
+    fun initiateScan(@RequestBody initScanDto: InitScanDto): Map<String, Any> {
+        return osintService.initiateScan(initScanDto.domain)
     }
 
     @GetMapping("/scans")
-    fun getScans(): ResponseEntity<List<Map<String, Any>>> {
-        return ResponseEntity.ok(osintService.getScans())
+    fun getScans(@RequestParam(required = false) limit: Int?): ResponseEntity<List<Map<String, Any>>> {
+        return ResponseEntity.ok(osintService.getScans(limit))
     }
 
     @GetMapping("/scans/{id}")
