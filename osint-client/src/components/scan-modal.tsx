@@ -55,7 +55,7 @@ const ResultDataList = ({ name, data = [] }: ResultDataProps) => {
           <dd>
             <ul>
               {data.map((item) => (
-                <li>{item}</li>
+                <li key={item}>{item}</li>
               ))}
             </ul>
           </dd>
