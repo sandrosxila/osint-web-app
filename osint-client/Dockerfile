@@ -23,4 +23,4 @@ RUN pnpm run build
 EXPOSE 3000
 
 # Command to run the app
-CMD ["pnpm", "run", "dev"]
+CMD ["pnpm", "run", "dev", "--mode", "production"]
