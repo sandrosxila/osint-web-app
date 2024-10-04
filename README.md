@@ -13,7 +13,7 @@ Simple OSINT web application based on React-Vite Frontend, Kotlin-Spring Backend
 - **gradle** >= 8.10
 - **docker** >= 27.2
 
-## Start the app in development mode
+## Start the app in DEVELOPMENT mode
 
 ### Starting Backend Services
 In **dev mode**, the frontend is not containerized. TheHarvester tool lives within the same container where
@@ -33,8 +33,11 @@ pnpm install
 pnpm run dev
 ```
 
-## Start the app in production mode
+## Start the app in PRODUCTION mode
 To run the app in **prod mode** you just need to use `compose.yml` file. 
 ```shell
 docker compose -f compose.yaml up
 ```
+
+## Open the App
+visit the website `http://localhost:3000` in a browser. 
