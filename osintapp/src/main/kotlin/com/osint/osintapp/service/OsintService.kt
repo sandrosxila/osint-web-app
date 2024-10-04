@@ -63,6 +63,7 @@ class OsintService {
         // Return a ScanResult object
         val res = ScanResult(domain = domain, startTime = startTime, endTime = endTime, output = output.toString())
 
+        // Save the scan result into the database
         scanResultRepository.save(res)
 
         return mapOf(
