@@ -36,8 +36,5 @@ pnpm run dev
 ## Start the app in production mode
 To run the app in **prod mode** you just need to use `compose.yml` file after building the spring app. 
 ```shell
-cd ./osintapp
-./gradlew bootJar
-cd ..
 docker compose -f compose.yaml up
 ```
