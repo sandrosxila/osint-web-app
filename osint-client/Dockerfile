@@ -1,26 +1,35 @@
-# Use an official node image as the base image
-FROM node:20-alpine
+# Stage 1: Build the Vite app
+FROM node:20-alpine AS build
 
-# Set the working directory inside the container
+# Set the working directory
 WORKDIR /app
 
-# Install pnpm globally
-RUN npm install -g pnpm
-
-# Copy package.json and pnpm-lock.yaml files
+# Copy package.json and pnpm-lock.yaml
 COPY package.json pnpm-lock.yaml ./
 
-# Install dependencies using pnpm
+# Install pnpm
+RUN npm install -g pnpm
+
+# Install dependencies
 RUN pnpm install
 
-# Copy the rest of the app's source code to the container
+# Copy the rest of the app's source code
 COPY . .
 
-# Build the app for production
+# Build the Vite app
 RUN pnpm run build
 
-# Expose port 3000 (or whatever port your Vite app runs on)
+# Stage 2: Serve the built app
+FROM nginx:1.25.4-alpine-slim as prod
+
+# Copy the build output to Nginx's html folder
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# Copy the nginx configuration
+COPY nginx.conf  /etc/nginx/conf.d
+
+# Expose port 3000
 EXPOSE 3000
 
-# Command to run the app
-CMD ["pnpm", "run", "dev", "--mode", "production"]
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]

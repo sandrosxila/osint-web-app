@@ -23,7 +23,7 @@ services:
     networks:
       - osint-network
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/osint_db
+      - SPRING_PROFILES_ACTIVE=prod
 
   frontend:
     build:

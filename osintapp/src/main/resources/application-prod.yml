@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: osintapp
+  datasource:
+    url: jdbc:mysql://db:3306/osint_db
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: example
+  sql:
+    init:
+      mode: always
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
