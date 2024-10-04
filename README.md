@@ -34,7 +34,7 @@ pnpm run dev
 ```
 
 ## Start the app in production mode
-To run the app in **prod mode** you just need to use `compose.yml` file after building the spring app. 
+To run the app in **prod mode** you just need to use `compose.yml` file. 
 ```shell
 docker compose -f compose.yaml up
 ```
