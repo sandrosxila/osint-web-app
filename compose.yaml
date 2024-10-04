@@ -1,7 +1,6 @@
 services:
   db:
-    image: mysql
-    network_mode: host
+    image: mysql:9.0.1
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example
@@ -10,10 +9,33 @@ services:
       - "3306:3306"
     volumes:
       - ./mysql-data:/var/lib/mysql
+    networks:
+      - osint-network
+
   backend:
-    network_mode: host
     build:
       context: osintapp
       dockerfile: ./Dockerfile
     ports:
       - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - osint-network
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+
+  frontend:
+    build:
+      context: ./osint-client
+      dockerfile: ./Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - osint-network
+
+networks:
+  osint-network:
+    driver: bridge

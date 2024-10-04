@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./scan-card.module.scss";
 import { Modal } from "./ui/modal";
 import { ScannedResult } from "@/models/scan";
@@ -56,7 +55,7 @@ const ResultDataList = ({ name, data = [] }: ResultDataProps) => {
           <dd>
             <ul>
               {data.map((item) => (
-                <li>{item}</li>
+                <li key={item}>{item}</li>
               ))}
             </ul>
           </dd>

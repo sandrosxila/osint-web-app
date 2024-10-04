@@ -1,5 +1,5 @@
-# Use the official OpenJDK 22 slim image as the base
-FROM openjdk:22-slim
+# Use the official OpenJDK 21 slim image as the base
+FROM openjdk:21-slim
 
 # Set the working directory
 WORKDIR /app
@@ -18,12 +18,6 @@ RUN git clone https://github.com/laramies/theHarvester.git /app/theHarvester
 RUN python3 -m venv /app/theHarvester/venv && \
     /app/theHarvester/venv/bin/pip install --upgrade pip && \
     /app/theHarvester/venv/bin/pip install -r /app/theHarvester/requirements/base.txt
-
-# Install Kotlin manually by downloading the latest release from GitHub
-RUN curl -LO https://github.com/JetBrains/kotlin/releases/download/v1.9.0/kotlin-compiler-1.9.0.zip && \
-    unzip kotlin-compiler-1.9.0.zip -d /usr/local && \
-    ln -s /usr/local/kotlinc/bin/kotlinc /usr/local/bin/kotlinc && \
-    ln -s /usr/local/kotlinc/bin/kotlin /usr/local/bin/kotlin
 
 # Copy the Spring Boot application JAR to the container
 COPY build/libs/osintapp-0.0.1-SNAPSHOT.jar /app/osintapp.jar

@@ -54,7 +54,7 @@ class OsintService {
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            output.append("Error: ${e.message}")
+            throw RuntimeException(e.message);
         }
 
         // Record the end time
@@ -63,9 +63,11 @@ class OsintService {
         // Return a ScanResult object
         val res = ScanResult(domain = domain, startTime = startTime, endTime = endTime, output = output.toString())
 
+        // Save the scan result into the database
         scanResultRepository.save(res)
 
         return mapOf(
+            "id" to res.id,
             "domain" to res.domain,
             "startTime" to res.startTime.toString(),
             "endTime" to res.endTime.toString(),
@@ -95,6 +97,7 @@ class OsintService {
             return scanResultRepository.findAllByOrderByStartTimeDescWithLimit(limit)
                 .map { scan ->
                     mapOf(
+                        "id" to scan.id,
                         "domain" to scan.domain,
                         "startTime" to scan.startTime.toString(),
                         "endTime" to scan.endTime.toString(),
@@ -106,6 +109,7 @@ class OsintService {
         return scanResultRepository.findAllByOrderByStartTimeDesc()
             .map { scan ->
                 mapOf(
+                    "id" to scan.id,
                     "domain" to scan.domain,
                     "startTime" to scan.startTime.toString(),
                     "endTime" to scan.endTime.toString(),
@@ -118,6 +122,7 @@ class OsintService {
         val scan = scanResultRepository.findById(id).orElseThrow();
 
         return mapOf(
+            "id" to scan.id,
             "domain" to scan.domain,
             "startTime" to scan.startTime.toString(),
             "endTime" to scan.endTime.toString(),

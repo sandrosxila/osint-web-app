@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: osintapp
+  datasource:
+    url: jdbc:mysql://localhost:3306/osint_db
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: example
+  jpa:
+    hibernate:
+      ddl-auto: update
+debug: true
+
+logging:
+  level:
+    root: DEBUG
+    org:
+      springframework: DEBUG
