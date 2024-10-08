@@ -1,0 +1,3 @@
+[submodule "osintapp/theHarvester"]
+	path = osintapp/theHarvester
+	url = https://github.com/laramies/theHarvester

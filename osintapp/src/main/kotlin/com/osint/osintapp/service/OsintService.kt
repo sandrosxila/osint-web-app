@@ -36,7 +36,7 @@ class OsintService {
 
         try {
             val process = ProcessBuilder(command)
-                .directory(File("/app/theHarvester")) // Set the working directory
+                .directory(File("./theHarvester")) // Set the working directory
                 .redirectErrorStream(true) // Redirect error stream to output
                 .start()
 
